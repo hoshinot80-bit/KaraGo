@@ -1,0 +1,199 @@
+// app/assets/stylesheets/_auth.scss
+
+.auth-page {
+  display: flex;
+  justify-content: center;
+  padding: 60px 32px;
+  min-height: 60vh;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(229, 57, 53, 0.08) 0%, transparent 45%),
+    radial-gradient(circle at 85% 80%, rgba(229, 57, 53, 0.06) 0%, transparent 50%),
+    $color-bg-page;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  background-color: $color-bg-card;
+  border: 1px solid $color-border;
+  border-radius: 12px;
+  padding: 32px;
+
+  &__icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: $color-primary-light;
+    color: $color-primary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    margin: 0 auto 16px;
+  }
+
+  &__title {
+    font-size: 20px;
+    font-weight: bold;
+    color: $color-text-main;
+    text-align: center;
+    margin: 0 0 24px;
+  }
+
+  &__submit {
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  &__links {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 13px;
+
+    a {
+      color: $color-primary;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &__switch {
+    margin-top: 12px;
+    color: $color-text-sub;
+  }
+    &--wide {
+    max-width: 480px;
+  }
+
+  &__danger {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid $color-border;
+    text-align: center;
+  }
+
+  &__danger-text {
+    font-size: 12px;
+    color: $color-text-sub;
+    margin: 0 0 10px;
+  }
+
+  &__danger-btn {
+    font-size: 13px;
+    padding: 8px 16px;
+  }
+
+  &__back-link {
+    display: block;
+    margin-top: 12px;
+    font-size: 13px;
+    color: $color-text-sub;
+    text-decoration: none;
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+}
+
+.auth-field {
+  margin-bottom: 16px;
+
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    color: $color-text-main;
+    margin-bottom: 6px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid $color-border;
+    border-radius: 6px;
+    font-size: 14px;
+    box-sizing: border-box;
+
+    &:focus {
+      outline: none;
+      border-color: $color-primary;
+    }
+  }
+
+  &__hint {
+    font-size: 12px;
+    color: $color-text-sub;
+    margin-left: 6px;
+  }
+
+  &--checkbox {
+    display: flex;
+    align-items: center;
+
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: normal;
+      margin-bottom: 0;
+    }
+  }
+}
+.avatar-upload {
+  display: block;
+  width: 88px;
+  height: 88px;
+  margin: 0 auto 4px;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  background-color: $color-primary-light;
+
+  &__placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $color-primary;
+    font-size: 32px;
+  }
+
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 26px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+  }
+
+  &__input {
+    display: none;
+  }
+
+  &__hint {
+    text-align: center;
+    font-size: 11px;
+    color: $color-text-sub;
+    margin: 0 0 20px;
+  }
+}

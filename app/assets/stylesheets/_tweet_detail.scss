@@ -1,0 +1,426 @@
+// app/assets/stylesheets/_tweet_detail.scss
+
+.tweet-detail-page {
+  padding: 32px;
+
+  &__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+}
+
+.breadcrumb {
+  font-size: 13px;
+  color: $color-text-sub;
+  margin-bottom: 20px;
+
+  a {
+    color: $color-text-sub;
+    text-decoration: none;
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+
+  &__separator {
+    margin: 0 6px;
+  }
+
+  &__current {
+    color: $color-text-main;
+    font-weight: bold;
+  }
+}
+
+// PC版は表示、スマホ版(.tweet-detail-mobile)は常に非表示にしておく
+.tweet-detail-grid--desktop {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.tweet-detail-mobile {
+  display: none;
+}
+
+.tweet-detail-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.tweet-detail-sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.tweet-detail-layout {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  background-color: $color-bg-card;
+  border: 1px solid $color-border;
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.tweet-detail-artwork {
+  width: 220px;
+  height: 220px;
+  border-radius: 10px;
+  object-fit: cover;
+  flex-shrink: 0;
+
+  &--placeholder {
+    background: linear-gradient(135deg, $color-hero-bg-start 0%, $color-hero-bg-end 100%);
+    color: rgba(255, 255, 255, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 44px;
+  }
+}
+
+.tweet-detail-card {
+  flex: 1;
+  min-width: 0;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  &__like-count {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  &__like-count-top {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    i,
+    svg {
+      color: $color-primary;
+      font-size: 22px;
+      width: 22px;
+      height: 22px;
+    }
+  }
+
+  &__like-count-number {
+    font-size: 26px;
+    font-weight: bold;
+    color: $color-text-main;
+  }
+
+  &__like-count-label {
+    font-size: 11px;
+    color: $color-text-sub;
+    margin-top: 2px;
+  }
+
+  &__song {
+    font-size: 26px;
+    font-weight: bold;
+    color: $color-text-main;
+    margin: 0 0 6px;
+  }
+
+  &__artist {
+    font-size: 15px;
+    color: $color-text-sub;
+    margin: 0 0 12px;
+  }
+
+  &__tags {
+    margin-bottom: 16px;
+  }
+
+  &__meta {
+    border-top: 1px solid $color-border;
+    padding-top: 14px;
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__meta-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+
+    i {
+      width: 16px;
+      color: $color-text-sub;
+    }
+  }
+
+  &__meta-label {
+    color: $color-text-sub;
+    min-width: 50px;
+  }
+
+  &__meta-value {
+    color: $color-text-main;
+  }
+
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: $color-primary-light;
+    color: $color-primary;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 4px 12px;
+    border-radius: 14px;
+    margin-bottom: 10px;
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__like-btn {
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+    padding: 14px;
+    font-size: 15px;
+  }
+
+  &__sing-btn {
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+    padding: 14px;
+    font-size: 15px;
+
+    &--active {
+      background-color: $color-primary-light;
+      border-color: $color-primary;
+      color: $color-primary;
+    }
+  }
+}
+
+.tweet-detail-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.tweet-detail-poster {
+  background-color: $color-bg-card;
+  border: 1px solid $color-border;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+
+  &__title {
+    font-size: 15px;
+    font-weight: bold;
+    color: $color-text-main;
+    margin: 0 0 20px;
+  }
+
+  &__profile {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+    flex-wrap: wrap;
+  }
+
+  &__avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background-color: $color-primary-light;
+    color: $color-primary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  &__avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__info {
+    flex: 1;
+    min-width: 100px;
+  }
+
+  &__name {
+    font-size: 18px;
+    font-weight: bold;
+    color: $color-text-main;
+    margin: 0 0 4px;
+  }
+
+  &__count {
+    font-size: 13px;
+    color: $color-text-sub;
+    margin: 0;
+  }
+
+  &__link {
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 14px;
+    padding: 12px 14px;
+    margin-top: 20px;
+  }
+}
+
+.tweet-detail-related {
+  background-color: $color-bg-card;
+  border: 1px solid $color-border;
+  border-radius: 12px;
+  padding: 20px;
+
+  &__title {
+    font-size: 14px;
+    font-weight: bold;
+    color: $color-text-main;
+    margin: 0 0 14px;
+  }
+
+  &__more {
+    display: block;
+    text-align: center;
+    margin-top: 12px;
+    font-size: 13px;
+    color: $color-primary;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.related-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px;
+    border-radius: 8px;
+    text-decoration: none;
+
+    &:hover {
+      background-color: $color-bg-page;
+    }
+  }
+
+  &__thumb {
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    object-fit: cover;
+    flex-shrink: 0;
+
+    &--placeholder {
+      background-color: $color-primary-light;
+      color: $color-primary;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+  }
+
+  &__info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__song {
+    font-size: 13px;
+    font-weight: bold;
+    color: $color-text-main;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__artist {
+    font-size: 11px;
+    color: $color-text-sub;
+    margin: 0;
+  }
+
+  &__likes {
+    font-size: 12px;
+    color: $color-primary;
+    flex-shrink: 0;
+  }
+}
+
+.sidebar-box {
+  background-color: $color-bg-card;
+  border: 1px solid $color-border;
+  border-radius: 12px;
+  padding: 20px;
+
+  &__title {
+    font-size: 14px;
+    font-weight: bold;
+    color: $color-text-main;
+    margin: 0 0 14px;
+  }
+
+  &__tags {
+    margin-bottom: 14px;
+  }
+
+  &__cta {
+    display: block;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+  }
+}
+
+.tweet-detail-bottom {
+  display: flex;
+  gap: 20px;
+  align-items: stretch;
+
+  .tweet-detail-poster,
+  .tweet-detail-related {
+    flex: 1;
+    min-width: 0;
+    margin-bottom: 0;
+  }
+}

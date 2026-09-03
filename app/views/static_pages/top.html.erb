@@ -1,0 +1,130 @@
+<section class="hero">
+  <div class="hero__inner">
+    <h1 class="hero__title">
+      みんなでつくる<br>
+      カラオケ曲のシェアサイト
+    </h1>
+    <p class="hero__description">
+      KaraGoは、みんなのおすすめ曲を共有し、
+      タグやいいねでお気に入りの一曲を見つけることができるカラオケコミュニティサイトです。
+    </p>
+    <div class="hero__actions">
+  <%= link_to "曲を探してみる", tweets_path, class: "btn btn--primary" %>
+  <% if user_signed_in? %>
+    <%= link_to "新しく曲を投稿する", new_tweet_path, class: "btn btn--outline btn--on-dark" %>
+  <% else %>
+    <%= link_to "新規登録してはじめる", new_user_registration_path, class: "btn btn--outline btn--on-dark" %>
+  <% end %>
+</div>
+  </div>
+</section>
+
+<section class="ranking-section">
+  <div class="ranking-section__inner">
+    <div class="ranking-section__header">
+  <h2 class="ranking-section__title">
+    <i class="fas fa-fire"></i> いいねランキング TOP5
+  </h2>
+  <%= link_to "ランキングをもっと見る", tweets_path, class: "ranking-section__link ranking-section__link--mobile-only" %>
+</div>
+
+<div class="ranking-list">
+  <% @rank_tweets.each_with_index do |t, index| %>
+    <%= link_to tweet_path(t), class: "ranking-card ranking-card--rank-#{index + 1}" do %>
+  <% if t.artwork_url.present? %>
+    <%= image_tag t.artwork_url, class: "ranking-card__thumb" %>
+  <% else %>
+    <div class="ranking-card__thumb ranking-card__thumb--placeholder">
+      <i class="fas fa-music"></i>
+    </div>
+  <% end %>
+      <span class="ranking-card__rank">
+        <%= index + 1 %>
+      </span>
+      <div class="ranking-card__info">
+        <p class="ranking-card__song"><%= t.song_name %></p>
+        <p class="ranking-card__artist"><%= t.artist %></p>
+      </div>
+      <span class="ranking-card__likes">
+        <i class="fas fa-heart"></i> <%= t.liked_users.count %>
+      </span>
+    <% end %>
+  <% end %>
+</div>
+<div class="ranking-list-mobile">
+  <% @rank_tweets.each_with_index do |t, index| %>
+    <%= link_to tweet_path(t), class: "ranking-row ranking-row--rank-#{index + 1}" do %>
+      <span class="ranking-row__badge">
+        <%= index + 1 %>
+      </span>
+      <% if t.artwork_url.present? %>
+        <%= image_tag t.artwork_url, class: "ranking-row__thumb" %>
+      <% else %>
+        <div class="ranking-row__thumb ranking-row__thumb--placeholder">
+          <i class="fas fa-music"></i>
+        </div>
+      <% end %>
+      <div class="ranking-row__info">
+        <p class="ranking-row__song"><%= t.song_name %></p>
+        <p class="ranking-row__artist"><%= t.artist %></p>
+      </div>
+      <div class="ranking-row__tags">
+        <% t.tags.first(2).each do |tag| %>
+          <span class="tag-chip"><%= tag.name %></span>
+        <% end %>
+      </div>
+      <span class="ranking-row__likes">
+        <i class="fas fa-heart"></i> <%= t.liked_users.count %>
+      </span>
+      <i class="fas fa-chevron-right ranking-row__arrow"></i>
+    <% end %>
+  <% end %>
+</div>
+    <div class="ranking-section__more ranking-section__more--desktop-only">
+  <%= link_to "ランキングをもっと見る →", tweets_path, class: "btn btn--outline" %>
+</div>
+  </div>
+</section>
+<section class="featured-tags-section">
+  <div class="featured-tags-section__inner">
+    <h2 class="featured-tags-section__title">
+      <i class="fas fa-tags"></i> 人気のタグから探す
+    </h2>
+    <% tag_emojis = { "盛り上がる" => "🔥", "落ち着く" => "🌙", "年代問わず" => "👨‍👩‍👧", "友達とカラオケ" => "🎤", "一人カラオケ向け" => "🎧", "デート向け" => "💕" } %>
+
+<div class="featured-tags featured-tags--desktop">
+  <% @featured_tags.each do |tag_name| %>
+    <% tag = Tag.find_by(name: tag_name) %>
+    <% next unless tag %>
+    <%= link_to tweets_path(tag_ids: { tag.name => "1" }), class: "featured-tag" do %>
+      <%= tag_name.sub("向け", "") %>
+    <% end %>
+  <% end %>
+</div>
+
+<div class="featured-tags featured-tags--mobile">
+  <% tag_icons = { "盛り上がる" => "fa-fire", "落ち着く" => "fa-moon", "年代問わず" => "fa-user-group", "友達とカラオケ" => "fa-microphone", "一人カラオケ向け" => "fa-headphones", "デート向け" => "fa-heart" } %>
+  <% tag_colors = { "盛り上がる" => "#E53935", "落ち着く" => "#1E88E5", "年代問わず" => "#F9A825", "友達とカラオケ" => "#43A047", "一人カラオケ向け" => "#8E24AA", "デート向け" => "#D81B60" } %>
+  <% @featured_tags.each do |tag_name| %>
+    <% tag = Tag.find_by(name: tag_name) %>
+    <% next unless tag %>
+    <%= link_to tweets_path(tag_ids: { tag.name => "1" }), class: "featured-tag-outline", style: "border-color: #{tag_colors[tag_name]}; color: #{tag_colors[tag_name]};" do %>
+      <i class="fas <%= tag_icons[tag_name] %>"></i> <%= tag_name.sub("向け", "") %>
+    <% end %>
+  <% end %>
+</div>
+  </div>
+</section>
+<section class="post-cta-banner">
+  <div class="post-cta-banner__inner">
+    <div class="post-cta-banner__text">
+      <p class="post-cta-banner__lead">まだ歌っていない曲を見つけよう！</p>
+      <p class="post-cta-banner__headline">あなたのおすすめを投稿しよう</p>
+    </div>
+    <% if user_signed_in? %>
+      <%= link_to "曲を投稿する →", new_tweet_path, class: "btn btn--primary post-cta-banner__btn" %>
+    <% else %>
+      <%= link_to "曲を投稿する →", new_user_session_path, class: "btn btn--primary post-cta-banner__btn" %>
+    <% end %>
+  </div>
+</section>

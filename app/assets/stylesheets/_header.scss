@@ -1,0 +1,253 @@
+// app/assets/stylesheets/_header.scss
+
+.site-header {
+  background-color: #FFFFFF;
+  border-bottom: 1px solid $color-border;
+  padding: 12px 12px 12px 4px;
+
+  &__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__logo {
+    font-size: 40px;
+    font-weight: bold;
+    color: $color-primary;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    &-icon {
+      font-size: 24px;
+    }
+  }
+
+ &__nav {
+    display: flex;
+    gap: 40px;
+
+    &-link {
+      color: $color-text-main;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 500;
+
+      &:hover {
+        color: $color-primary;
+      }
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__user-menu {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: 8px;
+  }
+
+  &__user-email {
+    font-size: 13px;
+    color: $color-text-sub;
+  }
+
+  &__logout-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font: inherit;
+    padding: 0;
+  }
+}
+
+// ボタンの共通スタイル(ヘッダー以外でも使い回します)
+.btn {
+  display: inline-block;
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+
+  &--primary {
+    background-color: $color-primary;
+    color: #FFFFFF;
+
+    &:hover {
+      background-color: $color-primary-dark;
+    }
+  }
+
+  &--outline {
+    background-color: transparent;
+    color: $color-primary;
+    border: 1px solid $color-primary;
+
+    &:hover {
+      background-color: $color-primary-light;
+    }
+  }
+}
+.site-header__user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: $color-primary-light;
+  color: $color-primary;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  overflow: hidden;
+  text-decoration: none;
+  flex-shrink: 0;
+
+  &-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+// ハンバーガーボタン(PC画面では非表示)
+.site-header__hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+
+  span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: $color-text-main;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  &--open {
+    span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    span:nth-child(2) {
+      opacity: 0;
+    }
+    span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+  }
+}
+
+// モバイルメニュー(普段は非表示)
+.site-header__mobile-menu {
+  display: none;
+  flex-direction: column;
+  border-top: 1px solid $color-border;
+  padding: 12px 16px;
+
+  &--open {
+    display: flex;
+  }
+}
+
+.site-header__mobile-link {
+  padding: 12px 8px;
+  color: $color-text-main;
+  text-decoration: none;
+  font-size: 15px;
+  border-bottom: 1px solid $color-border;
+  text-align: left;
+  background: none;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  cursor: pointer;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.site-header__mobile-logout {
+  color: $color-primary;
+}
+
+// スマホ画面(768px以下)の時のレイアウト調整
+@media screen and (max-width: 768px) {
+  .site-header__nav,
+  .site-header__actions {
+    display: none;
+  }
+
+  .site-header__hamburger {
+    display: flex;
+  }
+
+  .site-header__inner {
+    justify-content: space-between;
+  }
+}
+// 下部固定タブバー(普段は非表示)
+.bottom-tabbar {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .bottom-tabbar {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: $color-bg-card;
+    border-top: 1px solid $color-border;
+    z-index: 100;
+  }
+
+  .bottom-tabbar__item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 8px 0 10px;
+    text-decoration: none;
+    color: $color-text-sub;
+    font-size: 11px;
+
+    i {
+      font-size: 18px;
+    }
+
+    &--active {
+      color: $color-primary;
+    }
+  }
+
+  // タブバーの分だけ、ページ下部にスペースを空けて隠れないようにする
+  main {
+    padding-bottom: 70px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .site-header__logo-icon {
+    font-size: 32px;
+  }
+}

@@ -1,0 +1,24 @@
+// app/assets/stylesheets/_footer.scss
+
+.site-footer {
+  background-color: $color-text-main;
+  padding: 24px 32px;
+  margin-top: 48px;
+
+  &__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  &__copyright {
+    color: #FFFFFF;
+    font-size: 13px;
+    margin: 0;
+  }
+}
+@media screen and (max-width: 768px) {
+  .site-footer {
+    display: none;
+  }
+}

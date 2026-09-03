@@ -1,0 +1,189 @@
+// app/assets/stylesheets/_tweet_detail_mobile.scss
+// 曲詳細ページのスマホ専用ブロック(.tweet-detail-mobile)のスタイル。
+// PC版(.tweet-detail-grid--desktop)には一切触れない、完全に独立したスタイル。
+
+@media screen and (max-width: 768px) {
+  .tweet-detail-page {
+    padding: 16px;
+  }
+
+  .tweet-detail-grid--desktop {
+    display: none;
+  }
+
+  .tweet-detail-mobile {
+    display: block;
+  }
+
+  // 画像+曲情報カードを横並びにする(4:6)
+  .tweet-detail-mobile .tweet-detail-layout {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 12px;
+    padding: 0;
+    border: none;
+    background: none;
+    margin-bottom: 16px;
+  }
+
+  .tweet-detail-mobile .tweet-detail-artwork {
+    display: block;
+    width: 40%;
+    height: auto;
+    flex-shrink: 0;
+    border-radius: 12px;
+    object-fit: cover;
+  }
+
+  .tweet-detail-mobile .tweet-detail-card {
+    display: block;
+    width: 60%;
+    flex-shrink: 0;
+    background-color: $color-bg-card;
+    border: 1px solid $color-border;
+    border-radius: 12px;
+    padding: 12px;
+    box-sizing: border-box;
+  }
+
+  .tweet-detail-mobile .tweet-detail-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .tweet-detail-mobile .tweet-detail-card__song {
+    font-size: 16px;
+    margin: 0 0 2px;
+  }
+
+  .tweet-detail-mobile .tweet-detail-card__artist {
+    font-size: 12px;
+    margin: 0 0 8px;
+  }
+
+  .tweet-detail-mobile .tweet-detail-card__like-count-number {
+    font-size: 16px;
+  }
+
+  .tweet-detail-mobile .tweet-detail-card__like-count-label {
+    font-size: 10px;
+  }
+
+  .tweet-detail-mobile .tweet-detail-card__tags {
+    margin-bottom: 8px;
+  }
+
+  .tweet-detail-mobile .tweet-detail-card__tags .tag-chip {
+    font-size: 10px;
+    padding: 3px 8px;
+  }
+
+  .tweet-detail-mobile .tweet-detail-card__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    border-top: none;
+    padding-top: 4px;
+    margin-bottom: 8px;
+  }
+
+  .tweet-detail-mobile .tweet-detail-card__meta-row {
+    display: flex;
+    gap: 4px;
+    font-size: 11px;
+  }
+
+  .tweet-detail-mobile .tweet-detail-card__meta-label {
+    color: $color-text-sub;
+
+    &::after {
+      content: "：";
+    }
+  }
+
+  .tweet-detail-mobile .tweet-detail-card__meta-value {
+    color: $color-text-main;
+  }
+
+  .tweet-detail-mobile .tweet-detail-card__actions {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .tweet-detail-mobile .tweet-detail-card__like-btn,
+  .tweet-detail-mobile .tweet-detail-card__sing-btn {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 11px;
+    padding: 8px 4px;
+  }
+
+  // 左列(投稿した人+アーティストの他の曲)と右列(この人の他の投稿曲)
+  .tweet-detail-mobile__two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    align-items: stretch;
+  }
+
+  .tweet-detail-mobile__col-left {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .tweet-detail-mobile__col-right {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tweet-detail-mobile .tweet-detail-poster {
+    margin-bottom: 0;
+    padding: 16px;
+  }
+
+  .tweet-detail-mobile .tweet-detail-poster__title {
+    font-size: 13px;
+    margin-bottom: 10px;
+  }
+
+  .tweet-detail-mobile .tweet-detail-poster__profile {
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+  .tweet-detail-mobile .tweet-detail-poster__avatar {
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .tweet-detail-mobile .tweet-detail-poster__name {
+    font-size: 14px;
+  }
+
+  .tweet-detail-mobile .tweet-detail-poster__count {
+    font-size: 11px;
+  }
+
+  .tweet-detail-mobile .tweet-detail-poster__link {
+    width: auto;
+    font-size: 12px;
+    padding: 6px 12px;
+    margin-top: 8px;
+  }
+
+  .tweet-detail-mobile .sidebar-box {
+    flex: 1;
+  }
+
+  .tweet-detail-mobile .tweet-detail-related {
+    height: 100%;
+    box-sizing: border-box;
+  }
+}

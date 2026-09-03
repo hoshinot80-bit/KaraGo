@@ -1,0 +1,28 @@
+// app/assets/stylesheets/_variables.scss
+
+// メインカラー(赤)
+$color-primary: #E53935;
+$color-primary-dark: #C62828;
+$color-primary-light: #FFEBEE;
+
+// テキストカラー
+$color-text-main: #212121;
+$color-text-sub: #757575;
+
+// 背景・ボーダー
+$color-bg-page: #FAFAFA;
+$color-bg-card: #FFFFFF;
+$color-border: #E0E0E0;
+
+// ヒーローセクション用(黒〜赤グラデーション)
+$color-hero-bg-start: #1A0000;
+$color-hero-bg-end: #3D0000;
+// ブラウザデフォルトの余白をリセット
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}

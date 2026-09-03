@@ -1,0 +1,103 @@
+<div class="auth-page">
+  <div class="auth-card auth-card--wide">
+    <div class="auth-card__icon">
+      <i class="fas fa-user-pen"></i>
+    </div>
+    <h2 class="auth-card__title">プロフィール編集</h2>
+    <label class="avatar-upload" for="user_avatar">
+  <% if resource.avatar.attached? && resource.avatar.blob.persisted? %>
+    <%= image_tag resource.avatar, class: "avatar-upload__img", id: "avatar-preview-img" %>
+  <% else %>
+    <div class="avatar-upload__placeholder" id="avatar-preview-placeholder">
+      <i class="fas fa-user"></i>
+    </div>
+  <% end %>
+  <span class="avatar-upload__overlay">
+    <i class="fas fa-camera"></i>
+  </span>
+</label>
+<p class="avatar-upload__hint">クリックして写真を変更</p>
+
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, multipart: true }) do |f| %>
+      <%= render "users/shared/error_messages", resource: resource %>
+
+      <div class="auth-field">
+        <%= f.label :name, "ニックネーム" %>
+        <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
+        <%= f.file_field :avatar, accept: "image/png,image/jpeg,image/gif", id: "user_avatar", class: "avatar-upload__input" %>
+      </div>
+
+      <div class="auth-field">
+        <%= f.label :profile, "プロフィール" %>
+        <%= f.text_area :profile, rows: 4 %>
+      </div>
+
+      <div class="auth-field">
+        <%= f.label :email, "メールアドレス" %>
+        <%= f.email_field :email, autocomplete: "email" %>
+      </div>
+
+      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+        <p class="auth-field__hint"><%= resource.unconfirmed_email %> の確認待ちです</p>
+      <% end %>
+
+      <div class="auth-field">
+        <%= f.label :password, "新しいパスワード" %>
+        <span class="auth-field__hint">（変更しない場合は空欄のままでOK）</span>
+        <%= f.password_field :password, autocomplete: "new-password" %>
+        <% if @minimum_password_length %>
+          <span class="auth-field__hint"><%= @minimum_password_length %>文字以上</span>
+        <% end %>
+      </div>
+
+      <div class="auth-field">
+        <%= f.label :password_confirmation, "新しいパスワード（確認用）" %>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+      </div>
+
+      <div class="auth-field">
+        <%= f.label :current_password, "現在のパスワード" %>
+        <span class="auth-field__hint">（変更内容の確認のため必要です）</span>
+        <%= f.password_field :current_password, autocomplete: "current-password" %>
+      </div>
+
+      <div class="auth-field">
+        <%= f.submit "更新する", class: "btn btn--primary auth-card__submit" %>
+      </div>
+    <% end %>
+
+    <div class="auth-card__danger">
+      <p class="auth-card__danger-text">アカウントを削除しますか？</p>
+      <%= button_to "アカウントを削除する", registration_path(resource_name), data: { turbo_confirm: "本当にアカウントを削除しますか？この操作は取り消せません。" }, method: :delete, class: "btn btn--outline auth-card__danger-btn" %>
+    </div>
+
+    <div class="auth-card__links">
+      <%= link_to "戻る", :back, class: "auth-card__back-link" %>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener("turbo:load", function () {
+    const input = document.getElementById("user_avatar");
+    if (!input) return;
+
+    input.addEventListener("change", function (e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const url = URL.createObjectURL(file);
+      const existingImg = document.getElementById("avatar-preview-img");
+      const placeholder = document.getElementById("avatar-preview-placeholder");
+
+      if (existingImg) {
+        existingImg.src = url;
+      } else if (placeholder) {
+        const img = document.createElement("img");
+        img.src = url;
+        img.id = "avatar-preview-img";
+        img.className = "avatar-upload__img";
+        placeholder.replaceWith(img);
+      }
+    });
+  });
+</script>

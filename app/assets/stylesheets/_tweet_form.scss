@@ -1,0 +1,84 @@
+// app/assets/stylesheets/_tweet_form.scss
+
+.tweet-form-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 48px 32px;
+
+  &__back {
+    margin-top: 16px;
+    font-size: 13px;
+    color: $color-text-sub;
+    text-decoration: none;
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+}
+
+.tweet-form-card {
+  width: 100%;
+  max-width: 480px;
+  background-color: $color-bg-card;
+  border: 2px solid $color-primary-light;
+  border-radius: 12px;
+  padding: 32px;
+
+  &__title {
+    font-size: 20px;
+    font-weight: bold;
+    color: $color-text-main;
+    text-align: center;
+    margin: 0 0 24px;
+  }
+
+  &__submit {
+    width: 100%;
+    margin-top: 8px;
+    padding: 12px;
+    font-size: 15px;
+  }
+}
+
+.tweet-form-field {
+  margin-bottom: 18px;
+
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    color: $color-text-main;
+    margin-bottom: 6px;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid $color-border;
+    border-radius: 6px;
+    font-size: 14px;
+    box-sizing: border-box;
+
+    &:focus {
+      outline: none;
+      border-color: $color-primary;
+    }
+  }
+}
+
+.tag-checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px 16px;
+}
+
+.tag-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: $color-text-main;
+  cursor: pointer;
+}

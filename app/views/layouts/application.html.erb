@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Kara Go" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+   <script src="https://kit.fontawesome.com/cef2d4f2d7.js" crossorigin="anonymous"></script>
+    <%= yield :head %>
+
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+<header class="site-header">
+ <div class="site-header__inner">
+  <%= link_to root_path, class: "site-header__logo" do %>
+   <span class="site-header__logo-icon">♪</span> KaraGo
+  <% end %>
+
+  <nav class="site-header__nav">
+   <%= link_to "トップページ", root_path, class: "site-header__nav-link" %>
+   <%= link_to "曲一覧", tweets_path, class: "site-header__nav-link" %>
+   <%= link_to "ランキング", tweets_path, class: "site-header__nav-link" %>
+   <% if user_signed_in? %>
+    <%= link_to "マイページ", user_path(current_user.id), class: "site-header__nav-link" %>
+   <% else %>
+    <%= link_to "マイページ", new_user_session_path, class: "site-header__nav-link" %>
+   <% end %>
+  </nav>
+
+  <div class="site-header__actions">
+   <% if user_signed_in? %>
+    <%= link_to "新規投稿", new_tweet_path, class: "btn btn--primary" %>
+    <div class="site-header__user-menu">
+     <%= link_to user_path(current_user.id), class: "site-header__user-avatar" do %>
+       <% if current_user.avatar.attached? %>
+         <%= image_tag current_user.avatar, class: "site-header__user-avatar-img" %>
+       <% else %>
+         <i class="fas fa-user"></i>
+       <% end %>
+     <% end %>
+     <%= button_to "ログアウト", destroy_user_session_path, method: :delete, class: "site-header__nav-link site-header__logout-btn" %>
+    </div>
+   <% else %>
+    <%= link_to "ログイン", new_user_session_path, class: "btn btn--outline" %>
+    <%= link_to "新規登録", new_user_registration_path, class: "btn btn--primary" %>
+   <% end %>
+  </div>
+
+  <button class="site-header__hamburger" id="hamburger-btn" aria-label="メニューを開く">
+   <span></span>
+   <span></span>
+   <span></span>
+  </button>
+ </div>
+
+ <div class="site-header__mobile-menu" id="mobile-menu">
+  <%= link_to "トップページ", root_path, class: "site-header__mobile-link" %>
+  <%= link_to "曲一覧", tweets_path, class: "site-header__mobile-link" %>
+  <%= link_to "ランキング", tweets_path, class: "site-header__mobile-link" %>
+  <% if user_signed_in? %>
+   <%= link_to "マイページ", user_path(current_user.id), class: "site-header__mobile-link" %>
+   <%= link_to "新規投稿", new_tweet_path, class: "site-header__mobile-link" %>
+   <%= button_to "ログアウト", destroy_user_session_path, method: :delete, class: "site-header__mobile-link site-header__mobile-logout" %>
+  <% else %>
+   <%= link_to "ログイン", new_user_session_path, class: "site-header__mobile-link" %>
+   <%= link_to "新規登録", new_user_registration_path, class: "site-header__mobile-link" %>
+  <% end %>
+ </div>
+</header>
+
+<script>
+  function initHamburgerMenu() {
+    const btn = document.getElementById("hamburger-btn");
+    const menu = document.getElementById("mobile-menu");
+    if (!btn || !menu) return;
+
+    // 重複登録を防ぐため、一度だけ登録する
+    if (btn.dataset.bound === "true") return;
+    btn.dataset.bound = "true";
+
+    btn.addEventListener("click", function () {
+      menu.classList.toggle("site-header__mobile-menu--open");
+      btn.classList.toggle("site-header__hamburger--open");
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", initHamburgerMenu);
+  document.addEventListener("turbo:load", initHamburgerMenu);
+</script>
+   <main>
+    <%= yield %>
+   </main>
+   <footer class="site-footer">
+ <div class="site-footer__inner">
+  <p class="site-footer__copyright">&copy; 2026 KaraGo</p>
+ </div>
+</footer>
+<nav class="bottom-tabbar">
+  <%= link_to root_path, class: "bottom-tabbar__item #{'bottom-tabbar__item--active' if current_page?(root_path)}" do %>
+    <i class="fas fa-house"></i>
+    <span>ホーム</span>
+  <% end %>
+  <%= link_to tweets_path, class: "bottom-tabbar__item #{'bottom-tabbar__item--active' if current_page?(tweets_path)}" do %>
+    <i class="fas fa-list"></i>
+    <span>曲一覧</span>
+  <% end %>
+  <%= link_to tweets_path, class: "bottom-tabbar__item" do %>
+    <i class="fas fa-crown"></i>
+    <span>ランキング</span>
+  <% end %>
+  <% if user_signed_in? %>
+    <%= link_to user_path(current_user.id), class: "bottom-tabbar__item" do %>
+      <i class="fas fa-user"></i>
+      <span>マイページ</span>
+    <% end %>
+  <% else %>
+    <%= link_to new_user_session_path, class: "bottom-tabbar__item" do %>
+      <i class="fas fa-user"></i>
+      <span>マイページ</span>
+    <% end %>
+  <% end %>
+</nav>
+  </body>
+</html>

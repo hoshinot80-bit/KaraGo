@@ -1,0 +1,343 @@
+<div class="tweet-detail-page">
+  <div class="tweet-detail-page__inner">
+
+    <nav class="breadcrumb">
+      <%= link_to "ホーム", root_path %>
+      <span class="breadcrumb__separator">&gt;</span>
+      <%= link_to "曲一覧", tweets_path %>
+      <span class="breadcrumb__separator">&gt;</span>
+      <span class="breadcrumb__current"><%= @tweet.song_name %></span>
+    </nav>
+
+    <!-- ============================== -->
+    <!-- PC版(デスクトップ用) ここから -->
+    <!-- ============================== -->
+    <div class="tweet-detail-grid tweet-detail-grid--desktop">
+      <div class="tweet-detail-main">
+
+        <div class="tweet-detail-layout">
+          <% if @tweet.artwork_url.present? %>
+            <%= image_tag @tweet.artwork_url, class: "tweet-detail-artwork" %>
+          <% else %>
+            <div class="tweet-detail-artwork tweet-detail-artwork--placeholder">
+              <i class="fas fa-music"></i>
+            </div>
+          <% end %>
+
+          <div class="tweet-detail-card">
+            <div class="tweet-detail-card__header">
+              <div>
+                <h1 class="tweet-detail-card__song"><%= @tweet.song_name %></h1>
+                <p class="tweet-detail-card__artist"><%= @tweet.artist %></p>
+              </div>
+              <div class="tweet-detail-card__like-count">
+                <div class="tweet-detail-card__like-count-top">
+                  <i class="fas fa-heart"></i>
+                  <span class="tweet-detail-card__like-count-number"><%= @tweet.likes.count %></span>
+                </div>
+                <span class="tweet-detail-card__like-count-label">いいね</span>
+              </div>
+            </div>
+
+            <div class="tweet-detail-card__tags">
+              <% @tweet.tags.each do |tag| %>
+                <span class="tag-chip"><%= tag.name %></span>
+              <% end %>
+            </div>
+
+            <div class="tweet-detail-card__meta">
+              <div class="tweet-detail-card__meta-row">
+                <i class="far fa-calendar"></i>
+                <span class="tweet-detail-card__meta-label">発売日</span>
+                <span class="tweet-detail-card__meta-value"><%= @tweet.year %>年</span>
+              </div>
+              <div class="tweet-detail-card__meta-row">
+                <i class="far fa-user"></i>
+                <span class="tweet-detail-card__meta-label">投稿者</span>
+                <span class="tweet-detail-card__meta-value"><%= @tweet.user.name %></span>
+              </div>
+              <div class="tweet-detail-card__meta-row">
+                <i class="fas fa-tag"></i>
+                <span class="tweet-detail-card__meta-label">タグ</span>
+                <span class="tweet-detail-card__meta-value"><%= @tweet.tags.map(&:name).join("、") %></span>
+              </div>
+            </div>
+
+            <div class="tweet-detail-card__actions">
+              <% if user_signed_in? %>
+                <% if current_user.already_liked?(@tweet) %>
+                  <%= link_to tweet_like_path(@tweet), data: { turbo_method: :delete }, class: "btn btn--primary tweet-detail-card__like-btn" do %>
+                    <i class="fas fa-heart"></i> いいね済み（<%= @tweet.likes.count %>）
+                  <% end %>
+                <% else %>
+                  <%= link_to tweet_likes_path(@tweet), data: { turbo_method: :post }, class: "btn btn--primary tweet-detail-card__like-btn" do %>
+                    <i class="far fa-heart"></i> いいねする（<%= @tweet.likes.count %>）
+                  <% end %>
+                <% end %>
+
+                <% if current_user.already_want_to_sing?(@tweet) %>
+                  <%= link_to tweet_want_to_sing_path(@tweet, id: 0), data: { turbo_method: :delete }, class: "btn btn--outline tweet-detail-card__sing-btn tweet-detail-card__sing-btn--active" do %>
+                    <i class="fas fa-bookmark"></i> 歌いたいに追加済み
+                  <% end %>
+                <% else %>
+                  <%= link_to tweet_want_to_sings_path(@tweet), data: { turbo_method: :post }, class: "btn btn--outline tweet-detail-card__sing-btn" do %>
+                    <i class="far fa-bookmark"></i> あとで歌いたいに追加
+                  <% end %>
+                <% end %>
+              <% else %>
+                <span class="btn btn--primary tweet-detail-card__like-btn">
+                  <i class="far fa-heart"></i> いいね（<%= @tweet.likes.count %>）
+                </span>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+        <div class="tweet-detail-bottom">
+          <div class="tweet-detail-poster">
+            <h3 class="tweet-detail-poster__title">この曲を投稿した人</h3>
+            <div class="tweet-detail-poster__profile">
+              <div class="tweet-detail-poster__avatar">
+                <% if @tweet.user.avatar.attached? %>
+                  <%= image_tag @tweet.user.avatar, class: "tweet-detail-poster__avatar-img" %>
+                <% else %>
+                  <i class="fas fa-user"></i>
+                <% end %>
+              </div>
+              <div class="tweet-detail-poster__info">
+                <p class="tweet-detail-poster__name"><%= @tweet.user.name %></p>
+                <p class="tweet-detail-poster__count">投稿した曲<%= @tweet.user.tweets.count %>曲</p>
+              </div>
+              <%= link_to "ユーザーページを見る", user_path(@tweet.user_id), class: "btn btn--outline tweet-detail-poster__link" %>
+            </div>
+          </div>
+
+          <% if @poster_other_tweets.present? %>
+            <div class="tweet-detail-related">
+              <h3 class="tweet-detail-related__title">この人の他の投稿曲</h3>
+              <div class="related-list">
+                <% @poster_other_tweets.each do |t| %>
+                  <%= link_to tweet_path(t), class: "related-list__item" do %>
+                    <% if t.artwork_url.present? %>
+                      <%= image_tag t.artwork_url, class: "related-list__thumb" %>
+                    <% else %>
+                      <div class="related-list__thumb related-list__thumb--placeholder">
+                        <i class="fas fa-music"></i>
+                      </div>
+                    <% end %>
+                    <div class="related-list__info">
+                      <p class="related-list__song"><%= t.song_name %></p>
+                      <p class="related-list__artist"><%= t.artist %></p>
+                    </div>
+                    <span class="related-list__likes"><i class="fas fa-heart"></i> <%= t.likes.count %></span>
+                  <% end %>
+                <% end %>
+              </div>
+              <%= link_to "もっと見る →", user_path(@tweet.user_id), class: "tweet-detail-related__more" %>
+            </div>
+          <% end %>
+        </div>
+
+      </div>
+
+      <div class="tweet-detail-sidebar">
+        <div class="sidebar-box">
+          <h3 class="sidebar-box__title">この曲のタグ</h3>
+          <div class="sidebar-box__tags">
+            <% @tweet.tags.each do |tag| %>
+              <span class="tag-chip"><%= tag.name %></span>
+            <% end %>
+          </div>
+          <% if @tweet.tags.present? %>
+            <%= link_to tweets_path(tag_ids: { @tweet.tags.first.name => "1" }), class: "btn btn--outline sidebar-box__cta" do %>
+              このタグの曲をもっと見る →
+            <% end %>
+          <% end %>
+        </div>
+
+        <% if @similar_artist_tweets.present? %>
+          <div class="sidebar-box">
+            <h3 class="sidebar-box__title"><%= @tweet.artist %>の他の曲</h3>
+            <div class="related-list related-list--compact">
+              <% @similar_artist_tweets.each do |t| %>
+                <%= link_to tweet_path(t), class: "related-list__item" do %>
+                  <% if t.artwork_url.present? %>
+                    <%= image_tag t.artwork_url, class: "related-list__thumb" %>
+                  <% else %>
+                    <div class="related-list__thumb related-list__thumb--placeholder">
+                      <i class="fas fa-music"></i>
+                    </div>
+                  <% end %>
+                  <div class="related-list__info">
+                    <p class="related-list__song"><%= t.song_name %></p>
+                    <p class="related-list__artist"><%= t.artist %></p>
+                  </div>
+                  <span class="related-list__likes"><i class="fas fa-heart"></i> <%= t.likes.count %></span>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <!-- ============================== -->
+    <!-- PC版 ここまで -->
+    <!-- ============================== -->
+
+
+    <!-- ============================== -->
+    <!-- スマホ版 ここから -->
+    <!-- ============================== -->
+    <div class="tweet-detail-mobile">
+
+      <div class="tweet-detail-layout">
+        <% if @tweet.artwork_url.present? %>
+          <%= image_tag @tweet.artwork_url, class: "tweet-detail-artwork" %>
+        <% else %>
+          <div class="tweet-detail-artwork tweet-detail-artwork--placeholder">
+            <i class="fas fa-music"></i>
+          </div>
+        <% end %>
+
+        <div class="tweet-detail-card">
+          <div class="tweet-detail-card__header">
+            <div>
+              <h1 class="tweet-detail-card__song"><%= @tweet.song_name %></h1>
+              <p class="tweet-detail-card__artist"><%= @tweet.artist %></p>
+            </div>
+            <div class="tweet-detail-card__like-count">
+              <div class="tweet-detail-card__like-count-top">
+                <i class="fas fa-heart"></i>
+                <span class="tweet-detail-card__like-count-number"><%= @tweet.likes.count %></span>
+              </div>
+              <span class="tweet-detail-card__like-count-label">いいね</span>
+            </div>
+          </div>
+
+          <div class="tweet-detail-card__tags">
+            <% @tweet.tags.each do |tag| %>
+              <span class="tag-chip"><%= tag.name %></span>
+            <% end %>
+          </div>
+
+          <div class="tweet-detail-card__meta">
+            <div class="tweet-detail-card__meta-row">
+              <span class="tweet-detail-card__meta-label">発売日</span>
+              <span class="tweet-detail-card__meta-value"><%= @tweet.year %>年</span>
+            </div>
+            <div class="tweet-detail-card__meta-row">
+              <span class="tweet-detail-card__meta-label">投稿者</span>
+              <span class="tweet-detail-card__meta-value"><%= @tweet.user.name %></span>
+            </div>
+          </div>
+
+          <div class="tweet-detail-card__actions">
+            <% if user_signed_in? %>
+              <% if current_user.already_liked?(@tweet) %>
+                <%= link_to tweet_like_path(@tweet), data: { turbo_method: :delete }, class: "btn btn--primary tweet-detail-card__like-btn" do %>
+                  <i class="fas fa-heart"></i> いいね済み（<%= @tweet.likes.count %>）
+                <% end %>
+              <% else %>
+                <%= link_to tweet_likes_path(@tweet), data: { turbo_method: :post }, class: "btn btn--primary tweet-detail-card__like-btn" do %>
+                  <i class="far fa-heart"></i> いいねする（<%= @tweet.likes.count %>）
+                <% end %>
+              <% end %>
+
+              <% if current_user.already_want_to_sing?(@tweet) %>
+                <%= link_to tweet_want_to_sing_path(@tweet, id: 0), data: { turbo_method: :delete }, class: "btn btn--outline tweet-detail-card__sing-btn tweet-detail-card__sing-btn--active" do %>
+                  <i class="fas fa-bookmark"></i> 歌いたいに追加済み
+                <% end %>
+              <% else %>
+                <%= link_to tweet_want_to_sings_path(@tweet), data: { turbo_method: :post }, class: "btn btn--outline tweet-detail-card__sing-btn" do %>
+                  <i class="far fa-bookmark"></i> あとで歌いたいに追加
+                <% end %>
+              <% end %>
+            <% else %>
+              <span class="btn btn--primary tweet-detail-card__like-btn">
+                <i class="far fa-heart"></i> いいね（<%= @tweet.likes.count %>）
+              </span>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <div class="tweet-detail-mobile__two-col">
+        <div class="tweet-detail-mobile__col-left">
+          <div class="tweet-detail-poster">
+            <h3 class="tweet-detail-poster__title">この曲を投稿した人</h3>
+            <div class="tweet-detail-poster__profile">
+              <div class="tweet-detail-poster__avatar">
+                <% if @tweet.user.avatar.attached? %>
+                  <%= image_tag @tweet.user.avatar, class: "tweet-detail-poster__avatar-img" %>
+                <% else %>
+                  <i class="fas fa-user"></i>
+                <% end %>
+              </div>
+              <div class="tweet-detail-poster__info">
+                <p class="tweet-detail-poster__name"><%= @tweet.user.name %></p>
+                <p class="tweet-detail-poster__count">投稿した曲<%= @tweet.user.tweets.count %>曲</p>
+              </div>
+              <%= link_to "ユーザーページを見る", user_path(@tweet.user_id), class: "btn btn--outline tweet-detail-poster__link" %>
+            </div>
+          </div>
+
+          <% if @similar_artist_tweets.present? %>
+            <div class="sidebar-box">
+              <h3 class="sidebar-box__title"><%= @tweet.artist %>の他の曲</h3>
+              <div class="related-list related-list--compact">
+                <% @similar_artist_tweets.each do |t| %>
+                  <%= link_to tweet_path(t), class: "related-list__item" do %>
+                    <% if t.artwork_url.present? %>
+                      <%= image_tag t.artwork_url, class: "related-list__thumb" %>
+                    <% else %>
+                      <div class="related-list__thumb related-list__thumb--placeholder">
+                        <i class="fas fa-music"></i>
+                      </div>
+                    <% end %>
+                    <div class="related-list__info">
+                      <p class="related-list__song"><%= t.song_name %></p>
+                      <p class="related-list__artist"><%= t.artist %></p>
+                    </div>
+                    <span class="related-list__likes"><i class="fas fa-heart"></i> <%= t.likes.count %></span>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="tweet-detail-mobile__col-right">
+          <% if @poster_other_tweets.present? %>
+            <div class="tweet-detail-related">
+              <h3 class="tweet-detail-related__title">この人の他の投稿曲</h3>
+              <div class="related-list">
+                <% @poster_other_tweets.each do |t| %>
+                  <%= link_to tweet_path(t), class: "related-list__item" do %>
+                    <% if t.artwork_url.present? %>
+                      <%= image_tag t.artwork_url, class: "related-list__thumb" %>
+                    <% else %>
+                      <div class="related-list__thumb related-list__thumb--placeholder">
+                        <i class="fas fa-music"></i>
+                      </div>
+                    <% end %>
+                    <div class="related-list__info">
+                      <p class="related-list__song"><%= t.song_name %></p>
+                      <p class="related-list__artist"><%= t.artist %></p>
+                    </div>
+                    <span class="related-list__likes"><i class="fas fa-heart"></i> <%= t.likes.count %></span>
+                  <% end %>
+                <% end %>
+              </div>
+              <%= link_to "もっと見る →", user_path(@tweet.user_id), class: "tweet-detail-related__more" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+    </div>
+    <!-- ============================== -->
+    <!-- スマホ版 ここまで -->
+    <!-- ============================== -->
+
+  </div>
+</div>
