@@ -8,4 +8,5 @@ Tag.create([
   { name: '年代問わず' },
   { name: '最初の曲向け' },
   { name: '最後の曲向け' },
+  Tag.find_or_create_by(name: tag_name)
 ])
