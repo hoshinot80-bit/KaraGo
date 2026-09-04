@@ -260,9 +260,9 @@
   font-weight: bold;
   color: $color-text-main;
   margin: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  overflow: visible;
+  line-height: 1.3;
 }
 
 .ranking-row__artist {
@@ -301,6 +301,11 @@
   padding: 0 32px 48px;
 }
 
+// PC版では非表示(スマホ版のみ表示)
+.featured-tags-section {
+  display: none;
+}
+
 .featured-tags-section__inner {
   max-width: 1200px;
   margin: 0 auto;
@@ -329,6 +334,11 @@
 
 .post-cta-banner {
   padding: 0 32px 48px;
+}
+
+// PC版では非表示(スマホ版のみ表示)
+.post-cta-banner {
+  display: none;
 }
 
 .post-cta-banner__inner {
@@ -434,8 +444,17 @@
   }
 
   .featured-tags--mobile {
-    display: flex !important;
-    flex-wrap: wrap;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
     gap: 10px;
+  }
+
+  .featured-tags--mobile .featured-tag-outline {
+    justify-content: center;
+  }
+
+  .featured-tags-section,
+  .post-cta-banner {
+    display: block;
   }
 }

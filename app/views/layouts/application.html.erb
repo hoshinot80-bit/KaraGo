@@ -99,9 +99,64 @@
     <%= yield %>
    </main>
    <footer class="site-footer">
- <div class="site-footer__inner">
-  <p class="site-footer__copyright">&copy; 2026 KaraGo</p>
- </div>
+  <div class="site-footer__main">
+    <div class="site-footer__brand">
+      <div class="site-footer__logo">
+        <span class="site-footer__logo-icon">🎤</span> KaraGo
+      </div>
+      <p class="site-footer__tagline">みんなでつくる<br>カラオケ曲のシェアサイト</p>
+      <p class="site-footer__description">あなたのおすすめの曲を投稿したり、みんなの曲にいいね！したり。お気に入りの一曲を見つけよう。</p>
+      <%= link_to tweets_path, class: "btn btn--outline site-footer__cta" do %>
+        <i class="fas fa-music"></i> 曲を探してみる
+      <% end %>
+    </div>
+
+    <div class="site-footer__col">
+      <h4 class="site-footer__col-title"><i class="fas fa-music"></i> メニュー</h4>
+      <ul class="site-footer__links">
+        <li><%= link_to root_path, class: "site-footer__link" do %><i class="fas fa-house"></i> トップページ<% end %></li>
+        <li><%= link_to tweets_path, class: "site-footer__link" do %><i class="fas fa-music"></i> 曲一覧<% end %></li>
+        <% if user_signed_in? %>
+          <li><%= link_to user_path(current_user.id), class: "site-footer__link" do %><i class="fas fa-user"></i> マイページ<% end %></li>
+          <li><%= link_to new_tweet_path, class: "site-footer__link" do %><i class="fas fa-plus"></i> 新規投稿<% end %></li>
+        <% else %>
+          <li><%= link_to new_user_session_path, class: "site-footer__link" do %><i class="fas fa-user"></i> マイページ<% end %></li>
+        <% end %>
+      </ul>
+    </div>
+
+    <% if user_signed_in? %>
+      <div class="site-footer__col">
+        <h4 class="site-footer__col-title"><i class="far fa-heart"></i> マイページ内メニュー</h4>
+        <ul class="site-footer__links">
+          <li><%= link_to user_path(current_user.id), class: "site-footer__link" do %><i class="fas fa-user"></i> マイページ<% end %></li>
+          <li><%= link_to "#{user_path(current_user.id)}#posted-tweets", class: "site-footer__link" do %><i class="fas fa-pen"></i> 投稿した曲<% end %></li>
+          <li><%= link_to "#{user_path(current_user.id)}#liked-tweets", class: "site-footer__link" do %><i class="far fa-heart"></i> いいねした曲<% end %></li>
+          <li><%= link_to "#{user_path(current_user.id)}#want-to-sing-tweets", class: "site-footer__link" do %><i class="fas fa-bookmark"></i> 歌いたい曲<% end %></li>
+          <li><%= link_to edit_user_registration_path, class: "site-footer__link" do %><i class="fas fa-pen"></i> プロフィール編集<% end %></li>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="site-footer__col">
+  <h4 class="site-footer__col-title"><i class="fas fa-tag"></i> 人気のタグ</h4>
+  <ul class="site-footer__links">
+    <% ["盛り上がる", "落ち着く", "年代問わず", "友達とカラオケ", "一人カラオケ向け", "デート向け"].each do |tag_name| %>
+      <% tag = Tag.find_by(name: tag_name) %>
+      <% next unless tag %>
+      <li>
+        <%= link_to tweets_path(tag_ids: { tag.name => "1" }), class: "site-footer__link" do %>
+          <%= tag_name.sub("向け", "") %>
+        <% end %>
+      </li>
+  <% end %>
+  </ul>
+</div>
+  </div>
+
+  <div class="site-footer__bottom">
+    <p class="site-footer__copyright">&copy; 2026 KaraGo. All rights reserved.</p>
+  </div>
 </footer>
 <nav class="bottom-tabbar">
   <%= link_to root_path, class: "bottom-tabbar__item #{'bottom-tabbar__item--active' if current_page?(root_path)}" do %>

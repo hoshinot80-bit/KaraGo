@@ -6,9 +6,9 @@ class LikesController < ApplicationController
   end
 
   def destroy
-    like = Like.find_by(tweet_id: params[:tweet_id], user_id: current_user.id)
-    like.destroy
-    redirect_back(fallback_location: root_path)
-  end
+  like = Like.find_by(tweet_id: params[:tweet_id], user_id: current_user.id)
+  like.destroy if like
+  redirect_back(fallback_location: root_path)
+end
 
 end

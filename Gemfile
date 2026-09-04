@@ -9,6 +9,7 @@ gem "sprockets-rails"
 group :development, :test do
   gem 'sqlite3' # 追加
   gem 'dotenv-rails' # 追加
+  gem 'pg'
 end
 
 # PostgreSQL → 本番用

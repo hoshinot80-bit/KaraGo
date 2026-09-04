@@ -26,8 +26,8 @@ def index
   @current_page = 1 if @current_page < 1
   @current_page = @total_pages if @total_pages > 0 && @current_page > @total_pages
 
-  offset = (@current_page - 1) * @per_page
-  @tweets = @tweets[offset, @per_page] || []
+  @offset = (@current_page - 1) * @per_page
+  @tweets = @tweets[@offset, @per_page] || []
 end
 
   def new

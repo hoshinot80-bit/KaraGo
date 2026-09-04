@@ -2,21 +2,118 @@
 
 .site-footer {
   background-color: $color-text-main;
-  padding: 24px 32px;
-  margin-top: 48px;
+  padding: 48px 32px 0;
+}
 
-  &__inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    text-align: center;
-  }
+.site-footer__main {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 32px;
+  padding-bottom: 40px;
+}
 
-  &__copyright {
-    color: #FFFFFF;
-    font-size: 13px;
-    margin: 0;
+.site-footer__brand {
+  padding-right: 20px;
+}
+
+.site-footer__logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #FFFFFF;
+  margin-bottom: 16px;
+}
+
+.site-footer__logo-icon {
+  font-size: 22px;
+}
+
+.site-footer__tagline {
+  font-size: 18px;
+  font-weight: bold;
+  color: #FFFFFF;
+  line-height: 1.4;
+  margin: 0 0 12px;
+}
+
+.site-footer__description {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.7;
+  margin: 0 0 20px;
+}
+
+.site-footer__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #FFFFFF;
+  border-color: #FFFFFF;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
   }
 }
+
+.site-footer__col-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #FFFFFF;
+  margin: 0 0 18px;
+
+  i {
+    color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+.site-footer__links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.site-footer__link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+
+  i {
+    color: rgba(255, 255, 255, 0.4);
+    width: 14px;
+  }
+
+  &:hover {
+    color: #FFFFFF;
+  }
+}
+
+.site-footer__bottom {
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 20px 32px;
+  text-align: center;
+  margin-top: 40px;
+}
+
+.site-footer__copyright {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 13px;
+  margin: 0;
+}
+
+// スマホではフッター自体を非表示のまま
 @media screen and (max-width: 768px) {
   .site-footer {
     display: none;

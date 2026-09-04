@@ -50,7 +50,7 @@
 
           <% @tweets.each_with_index do |t, index| %>
             <div class="tweet-table__row">
-              <span class="tweet-table__col tweet-table__col--rank"><%= index + 1 %></span>
+              <span class="tweet-table__col tweet-table__col--rank"><%= @offset + index + 1 %></span>
               <span class="tweet-table__col tweet-table__col--song">
   <%= link_to tweet_path(t.id), class: "tweet-table__song-cell" do %>
     <% if t.artwork_url.present? %>
@@ -138,35 +138,36 @@
       <% end %>
 
       <div class="mobile-tweet-list">
-        <% @tweets.each do |t| %>
-          <%= link_to tweet_path(t.id), class: "mobile-tweet-item" do %>
-            <% if t.artwork_url.present? %>
-              <%= image_tag t.artwork_url, class: "mobile-tweet-item__thumb" %>
-            <% else %>
-              <div class="mobile-tweet-item__thumb mobile-tweet-item__thumb--placeholder">
-                <i class="fas fa-music"></i>
-              </div>
-            <% end %>
-            <div class="mobile-tweet-item__body">
-              <div class="mobile-tweet-item__top">
-                <div class="mobile-tweet-item__info">
-                  <p class="mobile-tweet-item__song"><%= t.song_name %></p>
-                  <p class="mobile-tweet-item__artist"><%= t.artist %></p>
-                </div>
-                <span class="mobile-tweet-item__likes">
-                  <i class="fas fa-heart"></i> <%= t.likes.count %>
-                </span>
-                <i class="fas fa-chevron-right mobile-tweet-item__arrow"></i>
-              </div>
-              <div class="mobile-tweet-item__tags">
-                <% t.tags.each do |tag| %>
-                  <span class="tag-chip"><%= tag.name %></span>
-                <% end %>
-              </div>
-            </div>
+  <% @tweets.each_with_index do |t, index| %>
+    <%= link_to tweet_path(t.id), class: "mobile-tweet-item" do %>
+      <span class="mobile-tweet-item__rank"><%= @offset + index + 1 %></span>
+      <% if t.artwork_url.present? %>
+        <%= image_tag t.artwork_url, class: "mobile-tweet-item__thumb" %>
+      <% else %>
+        <div class="mobile-tweet-item__thumb mobile-tweet-item__thumb--placeholder">
+          <i class="fas fa-music"></i>
+        </div>
+      <% end %>
+      <div class="mobile-tweet-item__body">
+        <div class="mobile-tweet-item__top">
+          <div class="mobile-tweet-item__info">
+            <p class="mobile-tweet-item__song"><%= t.song_name %></p>
+            <p class="mobile-tweet-item__artist"><%= t.artist %></p>
+          </div>
+          <span class="mobile-tweet-item__likes">
+            <i class="fas fa-heart"></i> <%= t.likes.count %>
+          </span>
+          <i class="fas fa-chevron-right mobile-tweet-item__arrow"></i>
+        </div>
+        <div class="mobile-tweet-item__tags">
+          <% t.tags.each do |tag| %>
+            <span class="tag-chip"><%= tag.name %></span>
           <% end %>
-        <% end %>
+        </div>
       </div>
+    <% end %>
+  <% end %>
+</div>
 
       <% if @total_pages > 1 %>
         <div class="pagination">
