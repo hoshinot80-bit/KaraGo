@@ -128,10 +128,10 @@
       <div class="site-footer__col">
         <h4 class="site-footer__col-title"><i class="far fa-heart"></i> マイページ内メニュー</h4>
         <ul class="site-footer__links">
-          <li><%= link_to user_path(current_user.id), class: "site-footer__link" do %><i class="fas fa-user"></i> マイページ<% end %></li>
-          <li><%= link_to "#{user_path(current_user.id)}#posted-tweets", class: "site-footer__link" do %><i class="fas fa-pen"></i> 投稿した曲<% end %></li>
-          <li><%= link_to "#{user_path(current_user.id)}#liked-tweets", class: "site-footer__link" do %><i class="far fa-heart"></i> いいねした曲<% end %></li>
-          <li><%= link_to "#{user_path(current_user.id)}#want-to-sing-tweets", class: "site-footer__link" do %><i class="fas fa-bookmark"></i> 歌いたい曲<% end %></li>
+          <li><%= link_to user_path(current_user.id, tab: "posted"), class: "site-footer__link" do %><i class="fas fa-user"></i> マイページ<% end %></li>
+          <li><%= link_to user_path(current_user.id, tab: "posted"), class: "site-footer__link" do %><i class="fas fa-pen"></i> 投稿した曲<% end %></li>
+          <li><%= link_to user_path(current_user.id, tab: "liked"), class: "site-footer__link" do %><i class="far fa-heart"></i> いいねした曲<% end %></li>
+          <li><%= link_to user_path(current_user.id, tab: "want-to-sing"), class: "site-footer__link" do %><i class="fas fa-bookmark"></i> 歌いたい曲<% end %></li>
           <li><%= link_to edit_user_registration_path, class: "site-footer__link" do %><i class="fas fa-pen"></i> プロフィール編集<% end %></li>
         </ul>
       </div>
