@@ -1,0 +1,313 @@
+// app/assets/stylesheets/_mypage_mobile.scss
+// マイページのスマホ専用スタイル。
+// PC版の既存クラス(.mypage__layoutなど)には一切触れず、
+// 新しく追加した.mypage-mobile配下だけを対象にしている。
+
+.mypage-mobile {
+  display: none;
+}
+
+.mypage-mobile__header {
+  background: linear-gradient(180deg, $color-primary 0%, rgba(255, 255, 255, 0.15) 100%), $color-primary;
+  padding: 24px 20px 56px;
+  text-align: center;
+}
+
+.mypage-mobile__avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin: 0 auto 12px;
+  overflow: hidden;
+}
+
+.mypage-mobile__avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mypage-mobile__name {
+  font-size: 18px;
+  font-weight: bold;
+  color: #FFFFFF;
+  margin: 0 0 4px;
+}
+
+.mypage-mobile__bio {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0 0 16px;
+}
+
+.mypage-mobile__edit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #FFFFFF;
+  font-size: 13px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  text-decoration: none;
+}
+
+.mypage-mobile__stats {
+  display: flex;
+  gap: 10px;
+  margin: -40px 16px 0;
+  position: relative;
+  z-index: 1;
+}
+
+.mypage-mobile__stat {
+  flex: 1;
+  background-color: $color-bg-card;
+  border: 1px solid $color-border;
+  border-radius: 12px;
+  padding: 14px 8px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.mypage-mobile__stat-icon {
+  display: block;
+  color: $color-primary;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.mypage-mobile__stat-label {
+  display: block;
+  font-size: 11px;
+  color: $color-text-sub;
+  margin-bottom: 4px;
+  white-space: nowrap;
+}
+
+.mypage-mobile__stat-number {
+  display: block;
+  font-size: 20px;
+  font-weight: bold;
+  color: $color-text-main;
+}
+
+.mypage-mobile__stat--active {
+  border-color: $color-primary;
+
+  .mypage-mobile__stat-number {
+    color: $color-primary;
+  }
+}
+
+.mypage-mobile__tabs {
+  display: flex;
+  border-bottom: 1px solid $color-border;
+  margin: 24px 16px 0;
+}
+
+.mypage-mobile__tab {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 12px 4px;
+  font-size: 13px;
+  color: $color-text-sub;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+
+.mypage-mobile__tab--active {
+  color: $color-primary;
+  font-weight: bold;
+  border-bottom-color: $color-primary;
+}
+
+.mypage-mobile__panel {
+  display: none;
+  padding: 16px;
+}
+
+.mypage-mobile__panel--active {
+  display: block;
+}
+
+.mypage-mobile__panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.mypage-mobile__panel-title {
+  font-size: 15px;
+  font-weight: bold;
+  color: $color-text-main;
+  margin: 0;
+}
+
+.mypage-mobile__see-all {
+  font-size: 12px;
+  color: $color-primary;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.mobile-mypage-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mobile-mypage-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  background-color: $color-bg-card;
+  border: 1px solid $color-border;
+  border-radius: 10px;
+}
+
+.mobile-mypage-item__thumb {
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.mobile-mypage-item__thumb--placeholder {
+  background-color: $color-primary-light;
+  color: $color-primary;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.mobile-mypage-item__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.mobile-mypage-item__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.mobile-mypage-item__song {
+  font-size: 14px;
+  font-weight: bold;
+  color: $color-text-main;
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mobile-mypage-item__artist {
+  font-size: 12px;
+  color: $color-text-sub;
+  margin: 2px 0 6px;
+}
+
+.mobile-mypage-item__meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.mobile-mypage-item__meta .tag-chip {
+  font-size: 10px;
+  padding: 2px 8px;
+}
+
+.mobile-mypage-item__likes {
+  font-size: 12px;
+  color: $color-primary;
+  font-weight: bold;
+  text-decoration: none;
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.mobile-mypage-item__menu {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.mobile-mypage-item__menu-btn {
+  list-style: none;
+  cursor: pointer;
+  color: $color-text-sub;
+  padding: 4px 8px;
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+}
+
+.mobile-mypage-item__menu-list {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background-color: $color-bg-card;
+  border: 1px solid $color-border;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  min-width: 100px;
+  z-index: 5;
+  overflow: hidden;
+}
+
+.mobile-mypage-item__menu-item {
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: $color-text-main;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $color-bg-page;
+  }
+}
+
+.mobile-mypage-item__menu-item--danger {
+  color: $color-primary;
+}
+
+// ==========================================
+// ここから下だけが、スマホ画面(768px以下)に影響する
+// PC版(.mypage__layout など)には一切影響しない
+// ==========================================
+@media screen and (max-width: 768px) {
+  .mypage {
+    padding: 0;
+  }
+
+  .mypage__layout {
+    display: none;
+  }
+
+  .mypage-mobile {
+    display: block;
+  }
+}

@@ -188,3 +188,263 @@
     </div>
   </div>
 </div>
+
+<div class="mypage-mobile">
+  <div class="mypage-mobile__header">
+    <div class="mypage-mobile__avatar">
+      <% if @user.avatar.attached? %>
+        <%= image_tag @user.avatar, class: "mypage-mobile__avatar-img" %>
+      <% else %>
+        <i class="fas fa-user"></i>
+      <% end %>
+    </div>
+    <h1 class="mypage-mobile__name"><%= @user.name %></h1>
+    <% if @user.profile.present? %>
+      <p class="mypage-mobile__bio"><%= @user.profile %></p>
+    <% end %>
+    <% if user_signed_in? && current_user.id == @user.id %>
+      <%= link_to edit_user_registration_path, class: "mypage-mobile__edit-btn" do %>
+        プロフィールを編集 <i class="fas fa-chevron-right"></i>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="mypage-mobile__stats">
+    <%= link_to user_path(@user.id, tab: "posted"), class: "mypage-mobile__stat #{'mypage-mobile__stat--active' if @active_tab == 'posted'}" do %>
+      <span class="mypage-mobile__stat-icon"><i class="fas fa-heart"></i></span>
+      <span class="mypage-mobile__stat-label">投稿した曲</span>
+      <span class="mypage-mobile__stat-number"><%= @user.tweets.count %></span>
+    <% end %>
+    <%= link_to user_path(@user.id, tab: "liked"), class: "mypage-mobile__stat #{'mypage-mobile__stat--active' if @active_tab == 'liked'}" do %>
+      <span class="mypage-mobile__stat-icon"><i class="fas fa-heart"></i></span>
+      <span class="mypage-mobile__stat-label">いいねした曲</span>
+      <span class="mypage-mobile__stat-number"><%= @user.liked_tweets.count %></span>
+    <% end %>
+    <%= link_to user_path(@user.id, tab: "want-to-sing"), class: "mypage-mobile__stat #{'mypage-mobile__stat--active' if @active_tab == 'want-to-sing'}" do %>
+      <span class="mypage-mobile__stat-icon"><i class="fas fa-bookmark"></i></span>
+      <span class="mypage-mobile__stat-label">歌いたい曲</span>
+      <span class="mypage-mobile__stat-number"><%= @user.want_to_sing_tweets.count %></span>
+    <% end %>
+  </div>
+
+  <nav class="mypage-mobile__tabs">
+    <%= link_to "投稿した曲", user_path(@user.id, tab: "posted"), class: "mypage-mobile__tab #{'mypage-mobile__tab--active' if @active_tab == 'posted'}" %>
+    <%= link_to "いいねした曲", user_path(@user.id, tab: "liked"), class: "mypage-mobile__tab #{'mypage-mobile__tab--active' if @active_tab == 'liked'}" %>
+    <%= link_to "歌いたい曲", user_path(@user.id, tab: "want-to-sing"), class: "mypage-mobile__tab #{'mypage-mobile__tab--active' if @active_tab == 'want-to-sing'}" %>
+  </nav>
+
+  <% if @active_tab == "posted" %>
+    <div class="mypage-mobile__panel mypage-mobile__panel--active">
+      <div class="mypage-mobile__panel-header">
+        <h2 class="mypage-mobile__panel-title">投稿した曲</h2>
+      </div>
+
+      <% if @posted_tweets_page.present? %>
+        <div class="mobile-mypage-list">
+          <% @posted_tweets_page.each do |t| %>
+            <div class="mobile-mypage-item">
+              <% if t.artwork_url.present? %>
+                <%= image_tag t.artwork_url, class: "mobile-mypage-item__thumb" %>
+              <% else %>
+                <div class="mobile-mypage-item__thumb mobile-mypage-item__thumb--placeholder">
+                  <i class="fas fa-music"></i>
+                </div>
+              <% end %>
+              <div class="mobile-mypage-item__body">
+                <div class="mobile-mypage-item__top">
+                  <%= link_to t.song_name, tweet_path(t.id), class: "mobile-mypage-item__song" %>
+                  <% if user_signed_in? && current_user.id == @user.id %>
+                    <details class="mobile-mypage-item__menu">
+                      <summary class="mobile-mypage-item__menu-btn">
+                        <i class="fas fa-ellipsis"></i>
+                      </summary>
+                      <div class="mobile-mypage-item__menu-list">
+                        <%= link_to "編集する", edit_tweet_path(t.id), class: "mobile-mypage-item__menu-item" %>
+                        <%= button_to "削除する", tweet_path(t.id), method: :delete, class: "mobile-mypage-item__menu-item mobile-mypage-item__menu-item--danger", form: { data: { turbo_confirm: "本当に削除しますか？" } } %>
+                      </div>
+                    </details>
+                  <% end %>
+                </div>
+                <p class="mobile-mypage-item__artist"><%= t.artist %></p>
+                <div class="mobile-mypage-item__meta">
+                  <% t.tags.first(2).each do |tag| %>
+                    <span class="tag-chip"><%= tag.name %></span>
+                  <% end %>
+                  <% if user_signed_in? %>
+                    <% if current_user.already_liked?(t) %>
+                      <%= link_to tweet_like_path(id: t.id, tweet_id: t.id), data: { turbo_method: :delete }, class: "mobile-mypage-item__likes" do %>
+                        <i class="fas fa-heart"></i> <%= t.likes.count %>
+                      <% end %>
+                    <% else %>
+                      <%= link_to tweet_likes_path(id: t.id, tweet_id: t.id), data: { turbo_method: :post }, class: "mobile-mypage-item__likes" do %>
+                        <i class="far fa-heart"></i> <%= t.likes.count %>
+                      <% end %>
+                    <% end %>
+                  <% else %>
+                    <span class="mobile-mypage-item__likes"><i class="far fa-heart"></i> <%= t.likes.count %></span>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="mypage-section__empty">まだ投稿がありません。</p>
+      <% end %>
+
+      <% if @posted_total_pages > 1 %>
+        <div class="pagination">
+          <%= link_to "«", user_path(@user.id, tab: "posted", page: 1), class: "pagination__btn" if @current_page > 1 %>
+          <%= link_to "‹", user_path(@user.id, tab: "posted", page: @current_page - 1), class: "pagination__btn" if @current_page > 1 %>
+          <% (1..@posted_total_pages).each do |page_num| %>
+            <% if page_num == @current_page %>
+              <span class="pagination__btn pagination__btn--active"><%= page_num %></span>
+            <% elsif page_num == 1 || page_num == @posted_total_pages || (page_num - @current_page).abs <= 1 %>
+              <%= link_to page_num, user_path(@user.id, tab: "posted", page: page_num), class: "pagination__btn" %>
+            <% elsif (page_num - @current_page).abs == 2 %>
+              <span class="pagination__ellipsis">...</span>
+            <% end %>
+          <% end %>
+          <%= link_to "›", user_path(@user.id, tab: "posted", page: @current_page + 1), class: "pagination__btn" if @current_page < @posted_total_pages %>
+          <%= link_to "»", user_path(@user.id, tab: "posted", page: @posted_total_pages), class: "pagination__btn" if @current_page < @posted_total_pages %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% if @active_tab == "liked" %>
+    <div class="mypage-mobile__panel mypage-mobile__panel--active">
+      <div class="mypage-mobile__panel-header">
+        <h2 class="mypage-mobile__panel-title">いいねした曲</h2>
+      </div>
+
+      <% if @liked_tweets_page.present? %>
+        <div class="mobile-mypage-list">
+          <% @liked_tweets_page.each do |t| %>
+            <div class="mobile-mypage-item">
+              <% if t.artwork_url.present? %>
+                <%= image_tag t.artwork_url, class: "mobile-mypage-item__thumb" %>
+              <% else %>
+                <div class="mobile-mypage-item__thumb mobile-mypage-item__thumb--placeholder">
+                  <i class="fas fa-music"></i>
+                </div>
+              <% end %>
+              <div class="mobile-mypage-item__body">
+                <div class="mobile-mypage-item__top">
+                  <%= link_to t.song_name, tweet_path(t.id), class: "mobile-mypage-item__song" %>
+                </div>
+                <p class="mobile-mypage-item__artist"><%= t.artist %></p>
+                <div class="mobile-mypage-item__meta">
+                  <% t.tags.first(2).each do |tag| %>
+                    <span class="tag-chip"><%= tag.name %></span>
+                  <% end %>
+                  <% if user_signed_in? %>
+                    <% if current_user.already_liked?(t) %>
+                      <%= link_to tweet_like_path(id: t.id, tweet_id: t.id), data: { turbo_method: :delete }, class: "mobile-mypage-item__likes" do %>
+                        <i class="fas fa-heart"></i> <%= t.likes.count %>
+                      <% end %>
+                    <% else %>
+                      <%= link_to tweet_likes_path(id: t.id, tweet_id: t.id), data: { turbo_method: :post }, class: "mobile-mypage-item__likes" do %>
+                        <i class="far fa-heart"></i> <%= t.likes.count %>
+                      <% end %>
+                    <% end %>
+                  <% else %>
+                    <span class="mobile-mypage-item__likes"><i class="far fa-heart"></i> <%= t.likes.count %></span>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="mypage-section__empty">まだいいねした曲がありません。</p>
+      <% end %>
+
+      <% if @liked_total_pages > 1 %>
+        <div class="pagination">
+          <%= link_to "«", user_path(@user.id, tab: "liked", page: 1), class: "pagination__btn" if @current_page > 1 %>
+          <%= link_to "‹", user_path(@user.id, tab: "liked", page: @current_page - 1), class: "pagination__btn" if @current_page > 1 %>
+          <% (1..@liked_total_pages).each do |page_num| %>
+            <% if page_num == @current_page %>
+              <span class="pagination__btn pagination__btn--active"><%= page_num %></span>
+            <% elsif page_num == 1 || page_num == @liked_total_pages || (page_num - @current_page).abs <= 1 %>
+              <%= link_to page_num, user_path(@user.id, tab: "liked", page: page_num), class: "pagination__btn" %>
+            <% elsif (page_num - @current_page).abs == 2 %>
+              <span class="pagination__ellipsis">...</span>
+            <% end %>
+          <% end %>
+          <%= link_to "›", user_path(@user.id, tab: "liked", page: @current_page + 1), class: "pagination__btn" if @current_page < @liked_total_pages %>
+          <%= link_to "»", user_path(@user.id, tab: "liked", page: @liked_total_pages), class: "pagination__btn" if @current_page < @liked_total_pages %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% if @active_tab == "want-to-sing" %>
+    <div class="mypage-mobile__panel mypage-mobile__panel--active">
+      <div class="mypage-mobile__panel-header">
+        <h2 class="mypage-mobile__panel-title">歌いたい曲</h2>
+      </div>
+
+      <% if @want_to_sing_tweets_page.present? %>
+        <div class="mobile-mypage-list">
+          <% @want_to_sing_tweets_page.each do |t| %>
+            <div class="mobile-mypage-item">
+              <% if t.artwork_url.present? %>
+                <%= image_tag t.artwork_url, class: "mobile-mypage-item__thumb" %>
+              <% else %>
+                <div class="mobile-mypage-item__thumb mobile-mypage-item__thumb--placeholder">
+                  <i class="fas fa-music"></i>
+                </div>
+              <% end %>
+              <div class="mobile-mypage-item__body">
+                <div class="mobile-mypage-item__top">
+                  <%= link_to t.song_name, tweet_path(t.id), class: "mobile-mypage-item__song" %>
+                </div>
+                <p class="mobile-mypage-item__artist"><%= t.artist %></p>
+                <div class="mobile-mypage-item__meta">
+                  <% t.tags.first(2).each do |tag| %>
+                    <span class="tag-chip"><%= tag.name %></span>
+                  <% end %>
+                  <% if user_signed_in? %>
+                    <% if current_user.already_liked?(t) %>
+                      <%= link_to tweet_like_path(id: t.id, tweet_id: t.id), data: { turbo_method: :delete }, class: "mobile-mypage-item__likes" do %>
+                        <i class="fas fa-heart"></i> <%= t.likes.count %>
+                      <% end %>
+                    <% else %>
+                      <%= link_to tweet_likes_path(id: t.id, tweet_id: t.id), data: { turbo_method: :post }, class: "mobile-mypage-item__likes" do %>
+                        <i class="far fa-heart"></i> <%= t.likes.count %>
+                      <% end %>
+                    <% end %>
+                  <% else %>
+                    <span class="mobile-mypage-item__likes"><i class="far fa-heart"></i> <%= t.likes.count %></span>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="mypage-section__empty">まだ歌いたい曲がありません。</p>
+      <% end %>
+
+      <% if @want_to_sing_total_pages > 1 %>
+        <div class="pagination">
+          <%= link_to "«", user_path(@user.id, tab: "want-to-sing", page: 1), class: "pagination__btn" if @current_page > 1 %>
+          <%= link_to "‹", user_path(@user.id, tab: "want-to-sing", page: @current_page - 1), class: "pagination__btn" if @current_page > 1 %>
+          <% (1..@want_to_sing_total_pages).each do |page_num| %>
+            <% if page_num == @current_page %>
+              <span class="pagination__btn pagination__btn--active"><%= page_num %></span>
+            <% elsif page_num == 1 || page_num == @want_to_sing_total_pages || (page_num - @current_page).abs <= 1 %>
+              <%= link_to page_num, user_path(@user.id, tab: "want-to-sing", page: page_num), class: "pagination__btn" %>
+            <% elsif (page_num - @current_page).abs == 2 %>
+              <span class="pagination__ellipsis">...</span>
+            <% end %>
+          <% end %>
+          <%= link_to "›", user_path(@user.id, tab: "want-to-sing", page: @current_page + 1), class: "pagination__btn" if @current_page < @want_to_sing_total_pages %>
+          <%= link_to "»", user_path(@user.id, tab: "want-to-sing", page: @want_to_sing_total_pages), class: "pagination__btn" if @current_page < @want_to_sing_total_pages %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

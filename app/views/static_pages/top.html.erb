@@ -65,14 +65,16 @@
         </div>
       <% end %>
       <div class="ranking-row__info">
-        <p class="ranking-row__song"><%= t.song_name %></p>
-        <p class="ranking-row__artist"><%= t.artist %></p>
-      </div>
-      <div class="ranking-row__tags">
-        <% t.tags.first(2).each do |tag| %>
-          <span class="tag-chip"><%= tag.name %></span>
-        <% end %>
-      </div>
+  <p class="ranking-row__song"><%= t.song_name %></p>
+  <div class="ranking-row__meta">
+    <span class="ranking-row__artist"><%= t.artist %></span>
+    <div class="ranking-row__tags">
+      <% t.tags.first(2).each do |tag| %>
+        <span class="tag-chip"><%= tag.name %></span>
+      <% end %>
+    </div>
+  </div>
+</div>
       <span class="ranking-row__likes">
         <i class="fas fa-heart"></i> <%= t.liked_users.count %>
       </span>
