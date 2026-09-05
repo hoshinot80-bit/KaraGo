@@ -26,16 +26,17 @@
   text-align: center;
 
   &__avatar {
-    width: 64px;
-    height: 64px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
     background-color: $color-primary-light;
     color: $color-primary;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 26px;
-    margin: 0 auto 12px;
+    font-size: 30px;
+    margin: 0 auto 14px;
+    overflow: hidden;
   }
    &__avatar-img {
     width: 100%;
@@ -48,7 +49,14 @@
     font-size: 17px;
     font-weight: bold;
     color: $color-text-main;
-    margin: 0 0 4px;
+    margin: 0 0 6px;
+  }
+
+  &__bio {
+    font-size: 13px;
+    color: $color-text-sub;
+    margin: 0 0 8px;
+    line-height: 1.5;
   }
 
   &__email {
@@ -59,10 +67,25 @@
   }
 
   &__edit-btn {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
     width: 100%;
-    margin-bottom: 20px;
     box-sizing: border-box;
+    margin-bottom: 20px;
+    padding: 10px 14px;
+    background-color: $color-primary-light;
+    color: $color-primary;
+    border: none;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none;
+
+    &:hover {
+      background-color: darken(#FFEBEE, 5%);
+    }
   }
 
   &__nav {
@@ -112,6 +135,28 @@
   min-width: 0;
 }
 
+.mypage-main__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.mypage-main__title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  color: $color-text-main;
+  margin: 0;
+
+  i,
+  svg {
+    color: $color-primary !important;
+  }
+}
+
 .mypage-section {
   margin-bottom: 32px;
 
@@ -145,6 +190,90 @@
   }
 }
 
+// PC版: テーブル形式のリスト
+.mypage-table {
+  background-color: $color-bg-card;
+  border: 1px solid $color-border;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.mypage-table__header,
+.mypage-table__row {
+  display: grid;
+  grid-template-columns: 40px 2fr 1.2fr 1.8fr 100px 90px;
+  align-items: center;
+  padding: 14px 20px;
+  gap: 12px;
+}
+
+.mypage-table__header {
+  background-color: #FAFAFA;
+  font-size: 13px;
+  color: $color-text-sub;
+  font-weight: bold;
+}
+
+.mypage-table__row {
+  border-top: 1px solid $color-border;
+  font-size: 14px;
+
+  &:hover {
+    background-color: #FAFAFA;
+  }
+}
+
+.mypage-table__col--rank {
+  color: $color-text-sub;
+}
+
+.mypage-table__col--likes {
+  color: $color-primary;
+  font-weight: bold;
+}
+
+.mypage-table__col--actions {
+  display: flex;
+  gap: 8px;
+}
+
+.mypage-table__song-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.mypage-table__thumb {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.mypage-table__thumb--placeholder {
+  background-color: $color-primary-light;
+  color: $color-primary;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.mypage-table__song-link {
+  color: $color-text-main;
+  font-weight: bold;
+  text-decoration: none;
+
+  &:hover {
+    color: $color-primary;
+    text-decoration: underline;
+  }
+}
+
+// 旧リスト形式(使わなくなったが、他ページとの互換のため残す)
 .mypage-list {
   display: flex;
   flex-direction: column;
