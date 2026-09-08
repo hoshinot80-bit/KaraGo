@@ -90,21 +90,21 @@
 
         <% if @total_pages > 1 %>
           <div class="pagination">
-            <%= link_to "«", tweets_path(page: 1, tag_ids: params[:tag_ids]), class: "pagination__btn" if @current_page > 1 %>
-            <%= link_to "‹", tweets_path(page: @current_page - 1, tag_ids: params[:tag_ids]), class: "pagination__btn" if @current_page > 1 %>
+            <%= link_to "«", tweets_path(page: 1, tag_ids: @safe_tag_ids), class: "pagination__btn" if @current_page > 1 %>
+            <%= link_to "‹", tweets_path(page: @current_page - 1, tag_ids: @safe_tag_ids), class: "pagination__btn" if @current_page > 1 %>
 
             <% (1..@total_pages).each do |page_num| %>
               <% if page_num == @current_page %>
                 <span class="pagination__btn pagination__btn--active"><%= page_num %></span>
               <% elsif page_num == 1 || page_num == @total_pages || (page_num - @current_page).abs <= 1 %>
-                <%= link_to page_num, tweets_path(page: page_num, tag_ids: params[:tag_ids]), class: "pagination__btn" %>
+                <%= link_to page_num, tweets_path(page: page_num, tag_ids: @safe_tag_ids), class: "pagination__btn" %>
               <% elsif (page_num - @current_page).abs == 2 %>
                 <span class="pagination__ellipsis">...</span>
               <% end %>
             <% end %>
 
-            <%= link_to "›", tweets_path(page: @current_page + 1, tag_ids: params[:tag_ids]), class: "pagination__btn" if @current_page < @total_pages %>
-            <%= link_to "»", tweets_path(page: @total_pages, tag_ids: params[:tag_ids]), class: "pagination__btn" if @current_page < @total_pages %>
+            <%= link_to "›", tweets_path(page: @current_page + 1, tag_ids: @safe_tag_ids), class: "pagination__btn" if @current_page < @total_pages %>
+            <%= link_to "»", tweets_path(page: @total_pages, tag_ids: @safe_tag_ids), class: "pagination__btn" if @current_page < @total_pages %>
           </div>
         <% end %>
       </div>
@@ -171,21 +171,21 @@
 
       <% if @total_pages > 1 %>
         <div class="pagination">
-          <%= link_to "«", tweets_path(page: 1, tag_ids: params[:tag_ids]), class: "pagination__btn" if @current_page > 1 %>
-          <%= link_to "‹", tweets_path(page: @current_page - 1, tag_ids: params[:tag_ids]), class: "pagination__btn" if @current_page > 1 %>
+          <%= link_to "«", tweets_path(page: 1, tag_ids: @safe_tag_ids), class: "pagination__btn" if @current_page > 1 %>
+          <%= link_to "‹", tweets_path(page: @current_page - 1, tag_ids: @safe_tag_ids), class: "pagination__btn" if @current_page > 1 %>
 
           <% (1..@total_pages).each do |page_num| %>
             <% if page_num == @current_page %>
               <span class="pagination__btn pagination__btn--active"><%= page_num %></span>
             <% elsif page_num == 1 || page_num == @total_pages || (page_num - @current_page).abs <= 1 %>
-              <%= link_to page_num, tweets_path(page: page_num, tag_ids: params[:tag_ids]), class: "pagination__btn" %>
+              <%= link_to page_num, tweets_path(page: page_num, tag_ids: @safe_tag_ids), class: "pagination__btn" %>
             <% elsif (page_num - @current_page).abs == 2 %>
               <span class="pagination__ellipsis">...</span>
             <% end %>
           <% end %>
 
-          <%= link_to "›", tweets_path(page: @current_page + 1, tag_ids: params[:tag_ids]), class: "pagination__btn" if @current_page < @total_pages %>
-          <%= link_to "»", tweets_path(page: @total_pages, tag_ids: params[:tag_ids]), class: "pagination__btn" if @current_page < @total_pages %>
+          <%= link_to "›", tweets_path(page: @current_page + 1, tag_ids: @safe_tag_ids), class: "pagination__btn" if @current_page < @total_pages %>
+          <%= link_to "»", tweets_path(page: @total_pages, tag_ids: @safe_tag_ids), class: "pagination__btn" if @current_page < @total_pages %>
         </div>
       <% end %>
     </div>

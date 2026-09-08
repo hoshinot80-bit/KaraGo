@@ -68,3 +68,4 @@ gem 'devise'
 gem "sassc-rails"
 gem 'cloudinary'
 gem 'activestorage-cloudinary-service'
+gem 'dotenv-rails'

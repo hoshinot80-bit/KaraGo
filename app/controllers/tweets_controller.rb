@@ -28,6 +28,7 @@ def index
 
   @offset = (@current_page - 1) * @per_page
   @tweets = @tweets[@offset, @per_page] || []
+  @safe_tag_ids = params[:tag_ids].present? ? params[:tag_ids].to_unsafe_h : {}
 end
 
   def new
