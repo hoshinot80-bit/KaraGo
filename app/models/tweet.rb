@@ -13,6 +13,7 @@ class Tweet < ApplicationRecord
   validates :song_name, uniqueness: { scope: :artist, message: "とアーティストの組み合わせは既に登録されています" }
 
   after_create :fetch_artwork
+  after_create :fetch_youtube_url
 
   private
 
@@ -31,5 +32,25 @@ class Tweet < ApplicationRecord
     end
   rescue => e
     Rails.logger.error("iTunes API取得失敗: #{e.message}")
+  end
+
+  def fetch_youtube_url
+    api_key = ENV["YOUTUBE_API_KEY"]
+    return if api_key.blank?
+
+    query = "#{song_name} #{artist}"
+    url = URI("https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=1&q=#{URI.encode_www_form_component(query)}&key=#{api_key}")
+
+    response = Net::HTTP.get(url)
+    data = JSON.parse(response)
+
+    if data["items"].present?
+      video_id = data["items"].first["id"]["videoId"]
+      if video_id.present?
+        update_column(:youtube_url, "https://www.youtube.com/watch?v=#{video_id}")
+      end
+    end
+  rescue => e
+    Rails.logger.error("YouTube API取得失敗: #{e.message}")
   end
 end

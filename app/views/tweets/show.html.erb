@@ -63,6 +63,14 @@
               </div>
             </div>
 
+            <% if @tweet.youtube_url.present? %>
+              <div class="tweet-detail-card__youtube">
+                <%= link_to @tweet.youtube_url, target: "_blank", rel: "noopener", class: "btn btn--outline tweet-detail-card__youtube-btn" do %>
+                  <i class="fab fa-youtube"></i> YouTubeで見る
+                <% end %>
+              </div>
+            <% end %>
+
             <div class="tweet-detail-card__actions">
               <% if user_signed_in? %>
                 <% if current_user.already_liked?(@tweet) %>
@@ -230,6 +238,14 @@
               <span class="tweet-detail-card__meta-value"><%= @tweet.user.name %></span>
             </div>
           </div>
+
+          <% if @tweet.youtube_url.present? %>
+            <div class="tweet-detail-card__youtube">
+              <%= link_to @tweet.youtube_url, target: "_blank", rel: "noopener", class: "btn btn--outline tweet-detail-card__youtube-btn" do %>
+                <i class="fab fa-youtube"></i> YouTubeで見る
+              <% end %>
+            </div>
+          <% end %>
 
           <div class="tweet-detail-card__actions">
             <% if user_signed_in? %>

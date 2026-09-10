@@ -17,6 +17,11 @@ $color-border: #E0E0E0;
 // ヒーローセクション用(黒〜赤グラデーション)
 $color-hero-bg-start: #1A0000;
 $color-hero-bg-end: #3D0000;
+
+// フォント
+$font-gothic: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+$font-mincho: "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", serif;
+
 // ブラウザデフォルトの余白をリセット
 * {
   box-sizing: border-box;
@@ -25,4 +30,5 @@ $color-hero-bg-end: #3D0000;
 body {
   margin: 0;
   padding: 0;
+  font-family: $font-gothic;
 }
