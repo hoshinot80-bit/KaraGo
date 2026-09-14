@@ -6,6 +6,11 @@
   align-items: center;
   padding: 48px 32px;
 
+  background-image: url(background.png);
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+
   &__back {
     margin-top: 16px;
     font-size: 13px;

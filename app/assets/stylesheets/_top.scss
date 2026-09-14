@@ -368,11 +368,10 @@
   border-radius: 12px;
   padding: 24px 28px;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 16px;
-  text-align: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
 .post-cta-banner__lead {
