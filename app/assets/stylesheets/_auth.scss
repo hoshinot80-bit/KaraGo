@@ -4,11 +4,10 @@
   display: flex;
   justify-content: center;
   padding: 60px 32px;
-  min-height: 60vh;
-  background:
-    radial-gradient(circle at 15% 20%, rgba(229, 57, 53, 0.08) 0%, transparent 45%),
-    radial-gradient(circle at 85% 80%, rgba(229, 57, 53, 0.06) 0%, transparent 50%),
-    $color-bg-page;
+  min-height: 100vh;
+  background-image: url("background.png");
+  background-size: cover;
+  background-position: center;
 }
 
 .auth-card {
