@@ -51,7 +51,7 @@ end
   @similar_artist_tweets = Tweet.where(artist: @tweet.artist)
                                  .where.not(id: @tweet.id)
                                  .sort_by { |t| -t.likes.count }
-                                 .first(5)
+                                 .first(3)
 end
 
   def edit
